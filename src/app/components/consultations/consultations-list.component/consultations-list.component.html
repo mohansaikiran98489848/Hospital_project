@@ -1,0 +1,60 @@
+<div class="flex min-h-screen bg-gray-50">
+  <div class="flex-1 ml-64 p-8">
+
+    <!-- LIST VIEW -->
+    <div *ngIf="!showForm" class="bg-white p-6 rounded-lg shadow">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Consultations</h2>
+        <button
+          (click)="addConsultation()"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md shadow"
+        >
+          + Add Consultation
+        </button>
+      </div>
+
+      <table class="w-full border-collapse border border-gray-200 text-left">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="border border-gray-200 p-2">#</th>
+            <th class="border border-gray-200 p-2">Patient</th>
+            <th class="border border-gray-200 p-2">Doctor</th>
+            <th class="border border-gray-200 p-2">Service</th>
+            <th class="border border-gray-200 p-2">Department</th>
+            <th class="border border-gray-200 p-2">Date</th>
+            <th class="border border-gray-200 p-2">Fee</th>
+            <th class="border border-gray-200 p-2 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of consultations; let i = index" class="hover:bg-gray-50">
+            <td class="border border-gray-200 p-2">{{ i + 1 }}</td>
+            <td class="border border-gray-200 p-2">{{ c.patientName }}</td>
+            <td class="border border-gray-200 p-2">{{ c.doctorName }}</td>
+            <td class="border border-gray-200 p-2">{{ c.serviceName }}</td>
+            <td class="border border-gray-200 p-2">{{ c.departmentName }}</td>
+            <td class="border border-gray-200 p-2">{{ c.consultationDate | date: 'short' }}</td>
+            <td class="border border-gray-200 p-2">{{ c.fee | currency: 'INR' }}</td>
+            <td class="border border-gray-200 p-2 text-center">
+              <button
+                (click)="editConsultation(c.consultationId)"
+                class="text-blue-600 hover:underline"
+              >
+                Edit
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- EDIT / ADD FORM -->
+    <div *ngIf="showForm" class="bg-white p-6 rounded-lg shadow-lg mt-6">
+      <app-consultation-edit
+        [id]="selectedId"
+        (close)="onCloseForm($event)"
+      ></app-consultation-edit>
+    </div>
+
+  </div>
+</div>

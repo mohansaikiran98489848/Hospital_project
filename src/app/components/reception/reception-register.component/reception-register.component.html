@@ -1,0 +1,30 @@
+<div style="max-width:760px; margin:0 auto; background:white; padding:16px; border-radius:6px;">
+  <h2>Register / Bill</h2>
+  <form (ngSubmit)="submit()">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+      <input [(ngModel)]="dto.patientName" name="patientName" placeholder="Patient name" required style="padding:8px; border: 1px solid black; border-radius: 10px; max-width: 300px;"/>
+      <input [(ngModel)]="dto.phone" name="phone" placeholder="Phone" style="padding:8px; border-radius:10px; max-width: 300px; border: 1px solid black;"/>
+      <input type="number" [(ngModel)]="dto.age" name="age" placeholder="Age" style="padding:8px; border-radius: 10px; max-width: 300px; border: 1px solid black;"/>
+      <input [(ngModel)]="dto.gender" name="gender" placeholder="Gender" style="padding:8px; border-radius: 10px; max-width: 300px; border: 1px solid black;"/>
+      <input [(ngModel)]="dto.address" name="address" placeholder="Address" style="grid-column:1 / -1; padding:8px; border-radius: 10px; max-width: 300px; border: 1px solid black;"/>
+    </div>
+
+    <div style="margin-top:8px;">
+      <label>Service Id (optional)</label>
+      <input type="number" [(ngModel)]="dto.serviceId" name="serviceId" style="padding:8px; width:120px; border: 1px solid black; border-radius: 10px; max-width: 300px;"/>
+    </div>
+
+    <div style="margin-top:8px; display:flex; gap:8px;">
+      <input type="number" [(ngModel)]="dto.paidAmount" name="paidAmount" placeholder="Paid amount" style="padding:8px; border: 1px solid black; border-radius: 10px; max-width: 300px;"/>
+      <input [(ngModel)]="dto.paymentMode" name="paymentMode" placeholder="Payment mode" style="padding:8px; border: 1px solid black; border-radius: 10px; max-width: 300px;"/>
+    </div>
+
+    <div style="margin-top:12px;">
+      <button type="submit" style="background:#16a34a; color:white; padding:8px 12px;">Submit</button>
+    </div>
+
+    <div *ngIf="response" style="margin-top:12px; background:#f8fafc; padding:12px; border-radius:6px;">
+      <pre>{{ response | json }}</pre>
+    </div>
+  </form>
+</div>

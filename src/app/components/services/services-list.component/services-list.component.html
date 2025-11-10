@@ -1,0 +1,72 @@
+<div class="ml-64 p-6">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-semibold text-blue-700">Services</h2>
+
+    <div class="flex items-center gap-3">
+      <input
+        type="text"
+        class="border rounded px-3 py-2 w-72"
+        placeholder="Search by name / dept / doctor"
+        [value]="search"
+        (input)="onSearch($event.target.value)"
+/>
+
+      <button
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        (click)="openAdd()">
+        + Add Service
+      </button>
+    </div>
+  </div>
+
+  <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full text-left border-collapse">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 border-b">Service Name</th>
+          <th class="px-4 py-2 border-b">Fee</th>
+          <th class="px-4 py-2 border-b">Department</th>
+          <th class="px-4 py-2 border-b">Doctor</th>
+          <th class="px-4 py-2 border-b w-40">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of services" class="hover:bg-gray-50">
+          <td class="px-4 py-2 border-b">{{ s.serviceName }}</td>
+          <td class="px-4 py-2 border-b">{{ s.fee | currency:'INR' }}</td>
+          <td class="px-4 py-2 border-b">{{ s.departmentName }}</td>
+          <td class="px-4 py-2 border-b">{{ s.doctorName }}</td>
+          <td class="px-4 py-2 border-b">
+            <button class="text-blue-600 hover:underline mr-3" (click)="openEdit(s)">Edit</button>
+            <button class="text-red-600 hover:underline" (click)="remove(s.serviceId)">Delete</button>
+          </td>
+        </tr>
+
+        <tr *ngIf="!loading && services.length === 0">
+          <td colspan="5" class="px-4 py-6 text-center text-gray-500">No services found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer: counts + Show More -->
+  <div class="flex items-center justify-between mt-4">
+    <div class="text-sm text-gray-600">
+      Showing {{ services.length }} of {{ totalCount }}
+    </div>
+
+    <button
+      class="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 disabled:opacity-50"
+      [disabled]="loading || services.length >= totalCount"
+      (click)="showMore()">
+      {{ loading ? 'Loading...' : (services.length >= totalCount ? 'All loaded' : 'Show More') }}
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-2xl">
+      <app-service-edit [service]="selected" (close)="onClose($event)"></app-service-edit>
+    </div>
+  </div>
+</div>

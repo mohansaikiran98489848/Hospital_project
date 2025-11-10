@@ -1,0 +1,26 @@
+<div class="ml-64 p-6">
+  <h2 class="text-2xl font-semibold mb-4 text-blue-700">Bills</h2>
+
+  <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full text-left border-collapse">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 border-b">Id</th>
+          <th class="px-4 py-2 border-b">Patient</th>
+          <th class="px-4 py-2 border-b">Total</th>
+          <th class="px-4 py-2 border-b">Status</th>
+          <th class="px-4 py-2 border-b">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let b of bills" class="hover:bg-gray-50">
+          <td class="px-4 py-2 border-b">{{ b.billHeaderId }}</td>
+          <td class="px-4 py-2 border-b">{{ b.patientName }}</td>
+          <td class="px-4 py-2 border-b">{{ b.totalAmount | currency:'INR' }}</td>
+          <td class="px-4 py-2 border-b">{{ b.status }}</td>
+          <td class="px-4 py-2 border-b"><a [routerLink]="['/bills', b.billHeaderId]" class="text-blue-600">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

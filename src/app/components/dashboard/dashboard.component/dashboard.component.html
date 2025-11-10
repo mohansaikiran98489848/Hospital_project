@@ -1,0 +1,38 @@
+<div class="flex min-h-screen bg-gray-50">
+  <!-- Main content (shifted right by 64 = 16rem) -->
+  <div class="flex-1 ml-64 p-8">
+    <h1 class="text-3xl font-bold mb-8 text-gray-800">Dashboard Overview</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div (click)="goTo('/doctors')" class="bg-white rounded-2xl shadow-md hover:shadow-xl p-6 cursor-pointer transition">
+        <h2 class="text-xl font-semibold mb-2 flex items-center gap-2">🧑‍⚕️ Doctors</h2>
+        <p class="text-gray-600">Manage and view doctor information.</p>
+      </div>
+
+      <div (click)="goTo('/patients')" class="bg-white rounded-2xl shadow-md hover:shadow-xl p-6 cursor-pointer transition">
+        <h2 class="text-xl font-semibold mb-2 flex items-center gap-2">🧍 Patients</h2>
+        <p class="text-gray-600">Track and manage patient records.</p>
+      </div>
+
+      <div (click)="goTo('/bills')" class="bg-white rounded-2xl shadow-md hover:shadow-xl p-6 cursor-pointer transition">
+        <h2 class="text-xl font-semibold mb-2 flex items-center gap-2">💵 Billing</h2>
+        <p class="text-gray-600">Handle billing and payment records.</p>
+      </div>
+
+      <div (click)="goTo('/services')" class="bg-white rounded-2xl shadow-md hover:shadow-xl p-6 cursor-pointer transition">
+        <h2 class="text-xl font-semibold mb-2 flex items-center gap-2">💊 Services</h2>
+        <p class="text-gray-600">List and categorize medical services.</p>
+      </div>
+
+      <div (click)="goTo('/reception')" class="bg-white rounded-2xl shadow-md hover:shadow-xl p-6 cursor-pointer transition">
+        <h2 class="text-xl font-semibold mb-2 flex items-center gap-2">📋 Reception</h2>
+        <p class="text-gray-600">Manage patient check-ins and bookings.</p>
+      </div>
+
+      <div (click)="goTo('/consultations')" class="bg-white rounded-2xl shadow-md hover:shadow-xl p-6 cursor-pointer transition">
+        <h2 class="text-xl font-semibold mb-2 flex items-center gap-2">💬 Consultations</h2>
+        <p class="text-gray-600">Track doctor-patient consultations.</p>
+      </div>
+    </div>
+  </div>
+</div>

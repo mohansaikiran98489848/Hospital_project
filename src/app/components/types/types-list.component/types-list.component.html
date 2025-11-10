@@ -1,0 +1,99 @@
+<div class="ml-64 p-6">
+  <h2 class="text-2xl font-semibold mb-4 text-blue-700">Types</h2>
+
+  <!-- status -->
+  <div *ngIf="successMsg" class="mb-3 p-3 rounded bg-green-100 text-green-800">{{ successMsg }}</div>
+  <div *ngIf="errorMsg" class="mb-3 p-3 rounded bg-red-100 text-red-800">{{ errorMsg }}</div>
+
+  <!-- top bar -->
+  <div class="flex items-center gap-3 mb-4">
+    <input #q type="text"
+           class="border rounded p-2 w-64"
+           placeholder="Search type name..."
+           (input)="onSearch(q.value)" />
+
+    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            (click)="openAdd()">+ Add Type</button>
+  </div>
+
+  <!-- list -->
+  <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full text-left border-collapse">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 border-b">Type Name</th>
+          <th class="px-4 py-2 border-b">Parent</th>
+          <th class="px-4 py-2 border-b">Description</th>
+          <th class="px-4 py-2 border-b w-40">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of types" class="hover:bg-gray-50">
+          <td class="px-4 py-2 border-b">{{ t.typeName }}</td>
+          <td class="px-4 py-2 border-b">{{ t.parentName || '-' }}</td>
+          <td class="px-4 py-2 border-b">{{ t.description || '-' }}</td>
+          <td class="px-4 py-2 border-b">
+            <button class="text-blue-700 hover:underline mr-3" (click)="openEdit(t)">Edit</button>
+            <button class="text-red-700 hover:underline" (click)="confirmDelete(t)">Delete</button>
+          </td>
+        </tr>
+
+        <tr *ngIf="!loading && types.length === 0">
+          <td class="px-4 py-6 text-gray-500" colspan="4">No types found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<div class="mt-4 text-center">
+  <!-- ✅ blue Show More button -->
+  <button *ngIf="types.length < totalCount && !loading"
+          class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-sm transition"
+          (click)="showMore()">
+    Show More
+  </button>
+
+  <!-- ✅ loading indicator -->
+  <span *ngIf="loading" class="text-gray-500 ml-3">Loading...</span>
+</div>
+  <!-- Modal -->
+  <div *ngIf="showModal" class="fixed inset-0 bg-black/40 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow p-6 w-full max-w-xl">
+      <h3 class="text-xl font-semibold mb-4">{{ isEdit ? 'Edit Type' : 'Add Type' }}</h3>
+
+      <form [formGroup]="form" (ngSubmit)="save()" class="space-y-4">
+        <div>
+          <label class="block text-gray-700 mb-1">Type Name</label>
+          <input type="text" formControlName="typeName" class="border p-2 rounded w-full" />
+          <div *ngIf="form.get('typeName')?.touched && form.get('typeName')?.invalid" class="text-red-600 text-sm mt-1">
+            Type name is required.
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-gray-700 mb-1">Parent</label>
+          <select formControlName="parentId" class="border p-2 rounded w-full">
+            <option [ngValue]="null">— No parent —</option>
+            <option *ngFor="let p of parentOptions()" [ngValue]="p.id">{{ p.typeName }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-gray-700 mb-1">Description</label>
+          <textarea rows="3" formControlName="description" class="border p-2 rounded w-full"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-4">
+          <button type="button" (click)="closeModal()"
+                  class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">
+            Cancel
+          </button>
+          <button type="submit" [disabled]="form.invalid"
+                  class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

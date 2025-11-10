@@ -1,0 +1,102 @@
+<div style="max-width:640px; margin:0 auto; background:white; padding:16px; border-radius:6px;">
+  <h2 class="text-2xl font-semibold mb-4">{{ isNew ? 'Add Patient' : 'Edit Patient' }}</h2>
+
+  <form (ngSubmit)="save()" #patientForm="ngForm" novalidate>
+    <!-- Name -->
+    <div style="margin-bottom:8px;">
+      <label>Name</label>
+      <input
+        [(ngModel)]="patient.patientName"
+        name="name"
+        required
+        placeholder="Enter patient name"
+        style="width:100%; padding:8px; border: 2px solid black; border-radius: 10px;"
+      />
+      <small *ngIf="patientForm.submitted && !patient.patientName" style="color:red;">Name is required</small>
+    </div>
+
+    <!-- Age -->
+    <div style="margin-bottom:8px;">
+      <label>Age</label>
+      <input
+        type="number"
+        [(ngModel)]="patient.age"
+        name="age"
+        min="0"
+        max="150"
+        required
+        placeholder="Enter age (0-150)"
+        style="width:100%; padding:8px; border: 2px solid black; border-radius: 10px;"
+      />
+      <small *ngIf="patient.age! < 0 || patient.age! > 150" style="color:red;">
+        Age must be between 0 and 150
+      </small>
+    </div>
+
+    <!-- Gender -->
+    <div style="margin-bottom:8px;">
+      <label>Gender</label>
+      <select
+        [(ngModel)]="patient.gender"
+        name="gender"
+        required
+        style="width:100%; padding:8px; border: 2px solid black; border-radius: 10px;"
+      >
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+      <small *ngIf="patientForm.submitted && !patient.gender" style="color:red;">Gender is required</small>
+    </div>
+
+    <!-- Phone -->
+    <div style="margin-bottom:8px;">
+      <label>Phone</label>
+     <input
+  type="tel"
+  [(ngModel)]="patient.phone"
+  name="phone"
+  required
+  pattern="^[0-9]{10}$"
+  maxlength="10"
+  type="number"
+  placeholder="Enter 10-digit phone number"
+  #phoneCtrl="ngModel"
+  style="width:100%; padding:8px; border: 2px solid black; border-radius: 10px;"
+/>
+<small *ngIf="phoneCtrl.invalid && phoneCtrl.touched" style="color:red;">
+  Enter a valid 10-digit number
+</small>
+
+    </div>
+
+    <!-- Address -->
+    <div style="margin-bottom:12px;">
+      <label>Address</label>
+      <textarea
+        [(ngModel)]="patient.address"
+        name="address"
+        placeholder="Enter address"
+        style="width:100%; padding:8px; border: 2px solid black; border-radius: 10px;"
+      ></textarea>
+    </div>
+
+    <!-- Buttons -->
+    <div style="display:flex; gap:8px;">
+      <button
+        type="submit"
+        [disabled]="!patientForm.form.valid"
+        style="background:#2563eb; color:white; padding:8px 12px; border-radius:5px;"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        (click)="cancel()"
+        style="padding:8px 12px; border-radius:5px;"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

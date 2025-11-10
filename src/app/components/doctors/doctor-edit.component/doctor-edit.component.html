@@ -1,0 +1,75 @@
+<div *ngIf="!loading; else loadingTpl">
+  <h2 class="text-xl font-semibold mb-4 text-blue-700">
+    {{ doctor ? 'Edit Doctor' : 'Add Doctor' }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="space-y-4">
+
+    <!-- Doctor Type -->
+    <div>
+      <label class="block text-gray-700 mb-1">Doctor Type <span class="text-red-500">*</span></label>
+      <select formControlName="typeId" class="border p-2 rounded w-full">
+        <option value="">Select Type</option>
+        <option *ngFor="let t of types" [value]="t.id">
+          {{ t.typeName }}
+        </option>
+      </select>
+      <small *ngIf="form.get('typeId')?.invalid && form.get('typeId')?.touched" class="text-red-500">
+        Please select a valid doctor type.
+      </small>
+    </div>
+
+    <!-- Department -->
+    <div>
+      <label class="block text-gray-700 mb-1">Department <span class="text-red-500">*</span></label>
+      <select formControlName="departmentId" class="border p-2 rounded w-full">
+        <option value="">Select Department</option>
+        <option *ngFor="let d of departments" [value]="d.departmentId">
+          {{ d.departmentName }}
+        </option>
+      </select>
+      <small *ngIf="form.get('departmentId')?.invalid && form.get('departmentId')?.touched" class="text-red-500">
+        Please select a department.
+      </small>
+    </div>
+
+    <!-- Doctor Name -->
+    <div>
+      <label class="block text-gray-700 mb-1">Doctor Name <span class="text-red-500">*</span></label>
+      <input formControlName="doctorName" type="text" class="border p-2 rounded w-full" />
+    </div>
+
+    <!-- Qualification -->
+    <div>
+      <label class="block text-gray-700 mb-1">Qualification</label>
+      <input formControlName="qualification" type="text" class="border p-2 rounded w-full" />
+    </div>
+
+    <!-- Phone -->
+    <div>
+      <label class="block text-gray-700 mb-1">Phone <span class="text-red-500">*</span></label>
+      <input formControlName="phone" type="tel" maxlength="10" class="border p-2 rounded w-full" />
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label class="block text-gray-700 mb-1">Email</label>
+      <input formControlName="email" type="email" class="border p-2 rounded w-full" />
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 mt-4">
+      <button type="button" (click)="cancel()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">
+        Cancel
+      </button>
+      <button type="submit" [disabled]="form.invalid"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+        Save
+      </button>
+    </div>
+  </form>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="text-gray-500 text-center">Loading...</div>
+</ng-template>

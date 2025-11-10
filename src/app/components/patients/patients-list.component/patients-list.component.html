@@ -1,0 +1,59 @@
+
+<div class="ml-64 p-6">
+  <h2 class="text-2xl font-semibold text-blue-700 text-center mb-4">Patients</h2>
+
+  <!-- Search + Add button -->
+  <div class="flex justify-between items-center mb-4">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"
+      placeholder="🔍 Search by name, address, or phone..."
+      class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-72"
+    />
+
+    <button
+      (click)="addPatient()"
+      class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md shadow"
+    >
+      + Add Patient
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full text-left border-collapse">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 border-b">Name</th>
+          <th class="px-4 py-2 border-b">Age</th>
+          <th class="px-4 py-2 border-b">Gender</th>
+          <th class="px-4 py-2 border-b">Phone</th>
+          <th class="px-4 py-2 border-b">Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of patients" class="hover:bg-gray-50">
+          <td class="px-4 py-2 border-b">{{ p.patientName }}</td>
+          <td class="px-4 py-2 border-b">{{ p.age }}</td>
+          <td class="px-4 py-2 border-b">{{ p.gender }}</td>
+          <td class="px-4 py-2 border-b">{{ p.phone }}</td>
+          <td class="px-4 py-2 border-b">{{ p.address }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="text-center mt-6" *ngIf="patients.length < totalCount">
+    <button
+      (click)="showMore()"
+      [disabled]="loading"
+      class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2 rounded-md shadow"
+    >
+      {{ 'Show More' }}
+    </button>
+  </div>
+
+
+</div>

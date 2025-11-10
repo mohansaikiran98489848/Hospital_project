@@ -1,0 +1,16 @@
+
+<div *ngIf="!isLoginPage(); else loginView" class="app-container">
+  <app-sidebar></app-sidebar>
+  <div class="main-content flex flex-col w-full">
+    <app-navbar></app-navbar>
+    <main class="flex-1 bg-gray-100 p-6">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+
+<ng-template #loginView>
+  <router-outlet></router-outlet>
+</ng-template>
+
+
