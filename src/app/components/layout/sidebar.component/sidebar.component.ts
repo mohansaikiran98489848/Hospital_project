@@ -114,6 +114,21 @@ export class SidebarComponent {
       .filter(section => section.children.length > 0);
   }
 
- 
+ canShow(sectionName: string): boolean {
+  const role = this.auth.getRole();
+
+  if (role === 'Admin') return true;
+
+  if (role === 'Doctor') {
+    return ['Doctors', 'Consultations', 'Patients'].includes(sectionName);
+  }
+
+  if (role === 'Reception') {
+    return ['Reception', 'Patients'].includes(sectionName);
+  }
+
+  return false;
+}
+
 }
 
