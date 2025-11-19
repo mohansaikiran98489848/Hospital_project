@@ -36,10 +36,11 @@ export class LoginComponent {
         this.loading = false;
         this.router.navigate(['/dashboard']);
       },
-      error: () => {
-        this.loading = false;
-        this.errorMessage = 'Invalid username or password';
-      }
+     error: (err) => {
+  console.log("LOGIN ERROR:", err);  // <--- IMPORTANT
+  this.loading = false;
+  this.errorMessage = 'Invalid username or password';
+}
     });
   }
 }
