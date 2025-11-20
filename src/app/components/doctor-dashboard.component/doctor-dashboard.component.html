@@ -1,0 +1,59 @@
+<!-- Entire page uses the same layout as Admin Dashboard -->
+<div class="flex min-h-screen bg-gray-50">
+
+  <!-- ⭐ Sidebar already exists globally, so main content is shifted right -->
+  <div class="flex-1 ml-64 p-8">
+
+    <h1 class="text-3xl font-bold mb-6">My Appointments</h1>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+
+      <div class="bg-white rounded-xl shadow p-4">
+        <h2 class="text-gray-600">Total</h2>
+        <p class="text-3xl font-bold">{{ summary?.total }}</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-4">
+        <h2 class="text-gray-600">Pending</h2>
+        <p class="text-3xl font-bold text-yellow-500">{{ summary?.pending }}</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-4">
+        <h2 class="text-gray-600">Completed</h2>
+        <p class="text-3xl font-bold text-green-500">{{ summary?.completed }}</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-4">
+        <h2 class="text-gray-600">Fresh</h2>
+        <p class="text-3xl font-bold text-blue-500">{{ summary?.fresh }}</p>
+      </div>
+
+    </div>
+
+    <!-- Appointments Table -->
+    <div class="bg-white rounded-xl shadow p-4">
+      <h2 class="text-xl font-semibold mb-3">Today’s Appointments</h2>
+
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b">
+            <th class="py-2">Patient</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of appointments" class="border-b hover:bg-gray-100">
+            <td class="py-1">{{ a.patientName }}</td>
+            <td>{{ a.scheduledAt | date:'shortTime' }}</td>
+            <td>{{ a.status }}</td>
+            <td>{{ a.notes }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div> 
+</div>

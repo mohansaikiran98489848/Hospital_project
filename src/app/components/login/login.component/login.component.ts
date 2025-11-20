@@ -33,9 +33,20 @@ export class LoginComponent {
 
     this.authService.login({ username: this.username, password: this.password }).subscribe({
       next: () => {
-        this.loading = false;
-        this.router.navigate(['/dashboard']);
-      },
+  this.loading = false;
+
+  const role = this.authService.getRole();
+
+  if (role === 'Doctor') {
+  this.router.navigate(['/dashboard/doctor']);
+} else if (role === 'Reception') {
+  this.router.navigate(['/dashboard/reception']);
+} else {
+  this.router.navigate(['/dashboard/home']);   // Admin or others
+}
+
+},
+
      error: (err) => {
   console.log("LOGIN ERROR:", err);  // <--- IMPORTANT
   this.loading = false;

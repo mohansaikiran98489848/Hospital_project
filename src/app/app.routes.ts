@@ -14,6 +14,8 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { ConsultationEditComponent } from './components/consultations/consultation-edit.component/consultation-edit.component';
 import { DepartmentsListComponent } from './components/departments/departments-list.component/departments-list.component';
 import { TypesListComponent } from './components/types/types-list.component/types-list.component';
+import { DoctorDashboardComponent } from './components/doctor-dashboard.component/doctor-dashboard.component';
+import { ReceptionDashboardComponent } from './components/reception-dashboard.component/reception-dashboard.component';
 
 /*export const appRoutes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -39,29 +41,33 @@ import { TypesListComponent } from './components/types/types-list.component/type
 
     { path: 'login', component: LoginComponent },
 
-    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    //{ path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    {
+  path: 'dashboard',
+  canActivate: [AuthGuard],
+  children: [
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
 
-    // 🧍 Patients → Everyone except blocked users
+    { path: 'home', component: DashboardComponent },          // Admin
+    { path: 'doctor', component: DoctorDashboardComponent },  // Doctor Dashboard
+    { path: 'reception', component: ReceptionDashboardComponent },
+  ]
+},
+ 
     { path: 'patients', component: PatientsListComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Admin', 'Doctor', 'Reception'] } },
     { path: 'patients/edit/:id', component: PatientEditComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Admin', 'Reception'] } },
 
-    // 👨‍⚕️ Doctors → Admin + Doctor only
     { path: 'doctors', component: DoctorsListComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Admin', 'Doctor'] } },
 
-    // 🏥 Departments → Admin only (optional, keep same)
     { path: 'departments', component: DepartmentsListComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Admin'] } },
 
-    // 💊 Services
     { path: 'services', component: ServicesListComponent, canActivate: [AuthGuard] },
 
-    // 🛎 Reception → Only Reception
-    { path: 'reception', component: ReceptionRegisterComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Reception'] } },
+  { path: 'reception', component: ReceptionRegisterComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Admin','Reception'] } },
 
-    // 💬 Consultations → Doctor + Admin
     { path: 'consultations', component: ConsultationsListComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Admin', 'Doctor'] } },
     { path: 'consultations/edit/:id', component: ConsultationEditComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Admin', 'Doctor'] } },
 
-    // 💵 Bills → Admin only (or whoever you want)
     { path: 'bills', component: BillsListComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Admin'] } },
     { path: 'bills/:id', component: BillDetailComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Admin'] } },
 
@@ -69,3 +75,4 @@ import { TypesListComponent } from './components/types/types-list.component/type
 
     { path: '**', redirectTo: 'login' }
 ];
+
